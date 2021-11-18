@@ -21,13 +21,17 @@ const api = require('@api/index');
 
 const cat = [{"name": "Grocery"},{name: "Restaurent"}, {"name": "Beauti & Spa"},{"name": "ABC"}, {"name": "ABC"}, {"name": "ABC"}, {"name": "ABC"},{"name": "ABC"},{"name": "ABC"}];
 
-const Home: () => Node = () => {
+const Home: () => Node = (props) => {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
     flex: 1
   };
+
+  const gotoTestStackScreen = () => {
+		props.navigation.navigate('MapView');
+	};
 
   const refRBSheet = useRef();
 
@@ -53,7 +57,7 @@ const Home: () => Node = () => {
     api.getBusiness(params, (e, r) => {
 
         if (e) {
-          console.log('Calling Login API Error')
+          console.log('Calling API Error',e);
           //alert("Error: " + e);
         } else {
           console.log('Calling API Success'+JSON.stringify(r));
@@ -176,7 +180,7 @@ const Home: () => Node = () => {
           </View>
         </View>
         <View style={{flexDirection: 'row', justifyContent: 'space-between', padding: 10}}>
-          <View style={{width: '80%',flexDirection: 'row', borderWidth: 1, borderColor: "#98A8B5", borderRadius: 5, padding: 10, alignItems: 'center'}}>
+          <View style={{width: '80%',flexDirection: 'row', borderWidth: 1, borderColor: "#98A8B5", borderRadius: 10, padding: 10, alignItems: 'center'}}>
             <Image
               source={require('@images/Icon/Icon.png')}
               // style={{height: 15, width: 15}}
@@ -203,6 +207,7 @@ const Home: () => Node = () => {
               )
             }}
             keyExtractor={(item, index) => index}
+            showsHorizontalScrollIndicator={false}
           />
         </View>
 
@@ -215,7 +220,7 @@ const Home: () => Node = () => {
                 // style={{height: 15, width: 15}}
               />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => refRBSheet.current.open()}>
+            <TouchableOpacity onPress={() => gotoTestStackScreen()}>
               <Image
                 source={require('@images/feather-map-pin/feather-map-pin.png')}
                 style={{marginLeft: 15}}
